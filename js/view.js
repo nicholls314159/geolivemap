@@ -16,7 +16,7 @@
  
 //  Define Constants 
 var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-var API_ACCESS_KEY = 'AIzaSyDJTIlvEzU-B2152hKEyUzBoAJmflJzcjU';
+var API_ACCESS_KEY = 'AIzaSyB7NeHBXPQlmR1i4rgFw2zSbIqyXpCXaUw';
 
 //Regex for URLs
 var URL_REGEX = /(?:https?|ftp):\/\/[\n\S]+/g;
