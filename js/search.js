@@ -289,25 +289,7 @@ function loadParamsFromURL() {
     inputObject.inputLocationRadius = '1000km';
     queryFromClickSearchNotURL = false;
     console.log("zoomer 2:  About to search YT")
-    searchYouTube(function(){
-        console.log("START in nested search function ....should be done with processRequest calls ")
-        if (finalResults.length === 0) {
-          //Remove results section as there is nothing to display
-          resetResultsSection();
-          $("div").remove(".tableOfVideoContentResults");
-        } else {
-          //show results section
-          showResultsSection();
-
-          //remove any old results
-          $("div").remove(".tableOfVideoContentResults");
-
-          //generate result list and map of videos
-          generateResultList();
-          initializeMap(inputObject.inputLat, inputObject.inputLong);
-          console.log("END in nested search function ....should be done with processRequest calls ")
-        }
-    });
+    searchYouTube();
     console.log("zoomer 3:  Done searching YT")
     /*
     inputObject.inputQuery = "Tokyo"
@@ -594,6 +576,24 @@ function processYouTubeRequest(request) {
     }
     //Update the URL bar with the search parameters from the search
     window.history.pushState("updatingURLwithParams", "YT Geo Search Tool", generateURLwithQueryParameters());
+
+    if (finalResults.length === 0) {
+          //Remove results section as there is nothing to display
+          resetResultsSection();
+          $("div").remove(".tableOfVideoContentResults");
+    } else {
+          //show results section
+          showResultsSection();
+
+          //remove any old results
+          $("div").remove(".tableOfVideoContentResults");
+
+          //generate result list and map of videos
+          generateResultList();
+          initializeMap(inputObject.inputLat, inputObject.inputLong);
+          console.log("END in nested search function ....should be done with processRequest calls ")
+    }
+
 
 
     //reset startURL with the latest
