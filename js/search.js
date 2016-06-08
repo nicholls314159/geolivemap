@@ -33,6 +33,9 @@ var inputObject = {};
 //geocoder is a geocoder object used for mapping functions
 var geocoder;
 
+var geoLiveMapInInitialState = false;
+var lastCityToSearch = false;
+
 //publishAfterTime and publishBeforeTime define the before and after times to submit for the search
 //var inputObject.publishAfterTime = '';
 //var publishBeforeTime = '';
@@ -84,22 +87,40 @@ function handleMapsLoad() {
   geocoder = new google.maps.Geocoder();
   $('#search-button').attr('disabled', false);
   startURL = window.location.href;
+  
+  
+  
   if (startURL && startURL.indexOf('?q=') > 0) {
+    geoLiveMapInInitialState = false;
+    lastCityToSearch = false;
     loadParamsFromURL(startURL);
   }else{
-    cleanInputObject();
-    initializeURL = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=5"
-    loadParamsFromURL(initializeURL);
+    stuffToGetDone(function(){
+      
+        generateResultList();
+              initializeMap(inputObject.inputLat, inputObject.inputLong);
+    });
+    
   }
-  //reset the input object to remove any old data
-  
 
-  //If the URL does not contain search parameters to parse skip to end of function
-  
-  
   //include map overlay code
   $.getScript("../js/mapOverlay.js");
 }
+
+
+function stuffToGetDone(){
+  console.log("Start stuffToGetDone")
+    geoLiveMapInInitialState = true;
+    lastCityToSearch = false;
+    cleanInputObject();
+    url1 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=0"
+    loadParamsFromURL(url1);
+    cleanInputObject();
+    url2 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=35.6894875&lo=139.69170639999993&lr=1000km&cl=&sl=tokyo&eo=false&cco=false&zl=0"
+    //lastCityToSearch = true;
+    loadParamsFromURL(url2);
+}
+
 
 /**
  * This function generates the FB and Twitter buttons and embeds them in the HTML
@@ -574,8 +595,13 @@ function processYouTubeRequest(request) {
           $("div").remove(".tableOfVideoContentResults");
 
           //generate result list and map of videos
-          generateResultList();
-          initializeMap(inputObject.inputLat, inputObject.inputLong);
+          if(geoLiveMapInInitialState && lastCityToSearch){
+              generateResultList();
+              initializeMap(inputObject.inputLat, inputObject.inputLong);
+          }else if(!geoLiveMapInInitialState){
+             generateResultList();
+             initializeMap(inputObject.inputLat, inputObject.inputLong);
+          }
         }
       });
     }
