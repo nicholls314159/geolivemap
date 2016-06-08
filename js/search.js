@@ -283,7 +283,7 @@ function loadParamsFromURL() {
     inputObject.hasSearchLocation = true;
     inputObject.videoLiscense = 'any';
     inputObject.videoEmbeddable = 'any';
-    inputObject.inputLocationRadius = 1000km;
+    inputObject.inputLocationRadius = '1000km';
     queryFromClickSearchNotURL = false;
     console.log("zoomer 2:  About to search YT")
     searchYouTube();
