@@ -83,7 +83,20 @@ function handleClientLoad() {
 function handleMapsLoad() {
   geocoder = new google.maps.Geocoder();
   $('#search-button').attr('disabled', false);
-  loadParamsFromURL();
+  startURL = window.location.href;
+  if (startURL && startURL.indexOf('?q=') > 0) {
+    loadParamsFromURL(startURL);
+  }else{
+    cleanInputObject();
+    initializeURL = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=5"
+    loadParamsFromURL(initializeURL);
+  }
+  //reset the input object to remove any old data
+  
+
+  //If the URL does not contain search parameters to parse skip to end of function
+  
+  
   //include map overlay code
   $.getScript("../js/mapOverlay.js");
 }
@@ -208,17 +221,18 @@ function cleanStringOfHTMLEncodedSpaces(raw_string){
   }
 }
 
+
 // This function loads parameters from a URL into the input object
-function loadParamsFromURL() {
-  startURL = window.location.href;
+function loadParamsFromURL(urlToParse) {
+  //startURL = window.location.href;
 
   //reset the input object to remove any old data
   cleanInputObject();
 
   //If the URL does not contain search parameters to parse skip to end of function
-  if (startURL && startURL.indexOf('?q=') > 0) {
+  if (urlToParse && urlToParse.indexOf('?q=') > 0) {
     //create an array of parameters parsed from URL
-    var paramListCollection = startURL.slice(startURL.indexOf('?q=') + 1).split("&");
+    var paramListCollection = urlToParse.slice(urlToParse.indexOf('?q=') + 1).split("&");
 
     //define the urlParams array
     var urlParams = {};
