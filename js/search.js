@@ -42,6 +42,7 @@ var queryFromClickSearchNotURL = false;
 
 //INITIAL_ZOOM_LEVEL is the zoom level that is set as default when our map is created
 var INITIAL_ZOOM_LEVEL = 0;
+var DEFAULT_ZOOM_LEVEL = 5;
 var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 //API access key for this project
@@ -288,6 +289,7 @@ function loadParamsFromURL() {
     inputObject.videoEmbeddable = 'any';
     inputObject.inputLocationRadius = '1000km';
     queryFromClickSearchNotURL = false;
+    inputObject.inputZoomLevel = INITIAL_ZOOM_LEVEL;
     console.log("zoomer 2:  About to search YT")
     searchYouTube();
     console.log("zoomer 3:  Done searching YT")
@@ -578,20 +580,25 @@ function processYouTubeRequest(request) {
     window.history.pushState("updatingURLwithParams", "YT Geo Search Tool", generateURLwithQueryParameters());
 
     if (finalResults.length === 0) {
+          console.log("processRequest ... results are 0")
           //Remove results section as there is nothing to display
           resetResultsSection();
           $("div").remove(".tableOfVideoContentResults");
     } else {
           //show results section
+          console.log("processRequest ... showResultsSection()")
           showResultsSection();
 
           //remove any old results
           $("div").remove(".tableOfVideoContentResults");
 
           //generate result list and map of videos
+          console.log("processRequest ... START generateResultList()")
           generateResultList();
+           console.log("processRequest ... END generateResultList()")
+            console.log("processRequest ... START initializeMap()")
           initializeMap(inputObject.inputLat, inputObject.inputLong);
-          console.log("END in nested search function ....should be done with processRequest calls ")
+           console.log("processRequest ... END initializeMap()")
     }
 
 
