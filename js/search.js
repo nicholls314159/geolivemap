@@ -63,9 +63,11 @@ var shortURL = '';
 /** Initialize filters, reset the results section, initialize Data client
  */
 $(document).ready(function() {
+  console.log("starts   $(document).ready(function()")
   hideSearchFilters();
   resetResultsSection();
   $.getScript('https://apis.google.com/js/client.js?onload=handleClientLoad');
+  console.log("end $(document).ready(function()")
 });
 
 /**  Initialize YouTube data client, initialize maps, set API access key, initialized url shortener
@@ -208,6 +210,7 @@ function cleanStringOfHTMLEncodedSpaces(raw_string){
 
 // This function loads parameters from a URL into the input object
 function loadParamsFromURL() {
+  console.log("start loadParamsFromURL()")
   startURL = window.location.href;
 
   //reset the input object to remove any old data
@@ -286,7 +289,25 @@ function loadParamsFromURL() {
     inputObject.inputLocationRadius = '1000km';
     queryFromClickSearchNotURL = false;
     console.log("zoomer 2:  About to search YT")
-    searchYouTube();
+    searchYouTube(function(){
+        console.log("START in nested search function ....should be done with processRequest calls ")
+        if (finalResults.length === 0) {
+          //Remove results section as there is nothing to display
+          resetResultsSection();
+          $("div").remove(".tableOfVideoContentResults");
+        } else {
+          //show results section
+          showResultsSection();
+
+          //remove any old results
+          $("div").remove(".tableOfVideoContentResults");
+
+          //generate result list and map of videos
+          generateResultList();
+          initializeMap(inputObject.inputLat, inputObject.inputLong);
+          console.log("END in nested search function ....should be done with processRequest calls ")
+        }
+    });
     console.log("zoomer 3:  Done searching YT")
     /*
     inputObject.inputQuery = "Tokyo"
@@ -295,6 +316,7 @@ function loadParamsFromURL() {
     searchYouTube();
     */
   }
+  console.log("end loadParamsFromURL()")
   
 }
 
@@ -454,6 +476,7 @@ function updateSearchResultCount(count) {
  *  @param request {object} - this is the request object returned from the YouTube search API
  */
 function processYouTubeRequest(request) {
+  console.log("start processYouTubeRequest()")
   request.execute(function(response) {
     var resultsArr = [];
     var videoIDString = '';
@@ -589,29 +612,12 @@ function processYouTubeRequest(request) {
        }
     });
   });
+  console.log("end processYouTubeRequest()")
 }
 
 /** This function posts the search results once finalResult array is complete
  */
-function postSearchResults(){
-  
-        if (finalResults.length === 0) {
-          //Remove results section as there is nothing to display
-          resetResultsSection();
-          $("div").remove(".tableOfVideoContentResults");
-        } else {
-          //show results section
-          showResultsSection();
 
-          //remove any old results
-          $("div").remove(".tableOfVideoContentResults");
-
-          //generate result list and map of videos
-          generateResultList();
-          initializeMap(inputObject.inputLat, inputObject.inputLong);
-        }
-
-}
 
 
 /** This function generates the UI of the results section after the search has been processed
