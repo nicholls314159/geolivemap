@@ -560,16 +560,20 @@ console.log("start processYouTubeRequest()... videoResult.title " +videoResult.t
             }            //console.log("concurrentViewers for this stream is...." + resultsArr[i].concurrentViewers)
           });
         }
-
+        console.log(" 2 resultsArr size is " + resultsArr.length)
+        console.log(" 2 finalResults size is " + finalResults.length)
         //remove duplicates from global results list
         for (var i = 0; i < resultsArr.length; i++) {
           var addResult = true;
           for (var j = 0; j < finalResults.length; j++) {
+            console.log("checking resultsArr["+i+"] against finalResults["+j+"]")
+            console.log("checking resultsArr["+i+"]= "+resultsArr[i].url+" against finalResults["+j+"]= "+finalResults[j].url)
             if (resultsArr[i].url === finalResults[j].url) {
               //it is a duplicate, do not add to final results and break inner loop
               addResult = false;
               break;
             }
+            console.log("resultsArr["+i+"] against finalResults["+j+"]result is "+ addResult)
           }
           if (addResult) {
             finalResults.push(resultsArr[i]);
