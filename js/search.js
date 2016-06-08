@@ -479,6 +479,8 @@ function processYouTubeRequest(request) {
         var videoResult = new Object();
         videoResult.title = entryArr[i].snippet.title;
 
+console.log("start processYouTubeRequest()... videoResult.title " +videoResult.title)
+
         //Pull the lattitude and longitude data per search result
         if ((inputObject.hasSearchLocation) && entryArr[i].georss$where) {
           var latlong = entryArr[i].georss$where.gml$Point.gml$pos.$t;
@@ -504,7 +506,7 @@ function processYouTubeRequest(request) {
         //add result to results
         resultsArr.push(videoResult);
       }
-
+      console.log("resultsArr size is " + resultsArr.length)
       //Now we will use the string of video IDs from the search to do another API call to pull latitude
       //and longitude values for each search result
 
@@ -576,6 +578,7 @@ function processYouTubeRequest(request) {
 
       });
     }
+    console.log("finalResults size is " + finalResults.length)
     //Update the URL bar with the search parameters from the search
     window.history.pushState("updatingURLwithParams", "YT Geo Search Tool", generateURLwithQueryParameters());
 
