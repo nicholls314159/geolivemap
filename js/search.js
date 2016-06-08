@@ -41,7 +41,7 @@ var geocoder;
 var queryFromClickSearchNotURL = false;
 
 //INITIAL_ZOOM_LEVEL is the zoom level that is set as default when our map is created
-var INITIAL_ZOOM_LEVEL = 5;
+var INITIAL_ZOOM_LEVEL = 0;
 var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 //API access key for this project
@@ -154,8 +154,6 @@ function searchYouTube() {
       var channelArray = inputObject.inputChannelList.split(",")
       for (var i = 0; i < channelArray.length; i++) {
         inputObject.currentChannel = channelArray[i].trim();
-
-        getPublishBeforeAndAfterTime();
         try {
           var request = gapi.client.youtube.search.list({
             q: inputObject.inputQuery,
@@ -277,8 +275,29 @@ function loadParamsFromURL() {
     if(inputObject.inputLocationRadius){
       $('#locRadius').val(inputObject.inputLocationRadius);
     }
+  }else{
+    //first time this map has been loaded so we will set the parameters
+    var startHere = ''
+    console.log("zoomer 1");
+    inputObject.inputSearchLocation = "Tokyo"
+    inputObject.hasSearchLocation = true;
+    inputObject.videoLiscense = 'any';
+    inputObject.videoEmbeddable = 'any';
+    inputObject.inputLocationRadius = 1000km;
+    queryFromClickSearchNotURL = false;
+    console.log("zoomer 2:  About to search YT")
+    searchYouTube();
+    console.log("zoomer 3:  Done searching YT")
+    /*
+    inputObject.inputQuery = "Tokyo"
+    inputObject.hasSearchLocation = true;
+    queryFromClickSearchNotURL = false;
+    searchYouTube();
+    */
   }
+  
 }
+
 
 
 /** This method handle search button clicks.   It pulls data from the web
@@ -302,7 +321,7 @@ function clickedSearchButton() {
   inputObject.inputCreativeCommonsOnly = 'false';
   inputObject.inputEmbedsOnly = $('#embedOnly').is(':checked');
   inputObject.inputCreativeCommonsOnly = $('#creativeCommonsOnly').is(':checked');
-  inputObject.inputZoomLevel = INITIAL_ZOOM_LEVEL;
+  inputObject.inputZoomLevel = DEFAULT_ZOOM_LEVEL;
 
   //complete input object
   completeInputObject();
@@ -548,21 +567,6 @@ function processYouTubeRequest(request) {
           }
         }
 
-        if (finalResults.length === 0) {
-          //Remove results section as there is nothing to display
-          resetResultsSection();
-          $("div").remove(".tableOfVideoContentResults");
-        } else {
-          //show results section
-          showResultsSection();
-
-          //remove any old results
-          $("div").remove(".tableOfVideoContentResults");
-
-          //generate result list and map of videos
-          generateResultList();
-          initializeMap(inputObject.inputLat, inputObject.inputLong);
-        }
       });
     }
     //Update the URL bar with the search parameters from the search
@@ -585,6 +589,28 @@ function processYouTubeRequest(request) {
        }
     });
   });
+}
+
+/** This function posts the search results once finalResult array is complete
+ */
+function postSearchResults(){
+  
+        if (finalResults.length === 0) {
+          //Remove results section as there is nothing to display
+          resetResultsSection();
+          $("div").remove(".tableOfVideoContentResults");
+        } else {
+          //show results section
+          showResultsSection();
+
+          //remove any old results
+          $("div").remove(".tableOfVideoContentResults");
+
+          //generate result list and map of videos
+          generateResultList();
+          initializeMap(inputObject.inputLat, inputObject.inputLong);
+        }
+
 }
 
 
