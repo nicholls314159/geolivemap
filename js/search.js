@@ -863,7 +863,7 @@ function generatePopupBoxHTML(videoResult){
   "<img src='" + videoResult.thumbNailURL + "' height='180' width='180' align='middle'/>" +
   "</a><br>"+
   */
-  '<iframe width="300" height="168" src="https://www.youtube.com/embed/'+videoResult.videoID+'" frameborder="0" allowfullscreen></iframe>'
+  '<iframe width="300" height="168" src="https://www.youtube.com/embed/'+videoResult.videoID+'" frameborder="0" autoplay="1" allowfullscreen></iframe>'
   "</td>"+
   "</tr>"+
   '<tr>'+
