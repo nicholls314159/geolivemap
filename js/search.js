@@ -121,7 +121,7 @@ function stuffToGetDone(){
     cleanInputObject();
     //lastCityToSearch = true;
     url2 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=35.6894875&lo=139.69170639999993&lr=1000km&cl=&sl=tokyo&eo=false&cco=false&zl=0"
-    //lastCityToSearch = true;
+    lastCityToSearch = true;
     loadParamsFromURL(url2);
     console.log("END stuffToGetDone")
 }
