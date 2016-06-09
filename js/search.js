@@ -47,7 +47,9 @@ var queryFromClickSearchNotURL = false;
 var DEFAULT_ZOOM_LEVEL = 5;
 var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-var INITIAL_CITY_LIST = ['Tokyo','New York','Los Angeles','London','Dallas','Chicago','Mexico City','Sao Paulo','Rio de janeiro','Brasilia','constantinople','Rome','Baghdad','New Delhi','Seoul','Sydney']
+var INITIAL_CITY_LIST = ['Tokyo','New York','Los Angeles','London','Dallas','Chicago','Mexico City','Sao Paulo',
+'Rio de janeiro','Brasilia','Constantinople','Rome','Baghdad','New Delhi','Seoul','Sydney','Madrid','Lagos','Cairo',
+'Casablanca','Bangkok','Perth','Toronto','Anchorage','Buenos Aires','Santiago','Berlin','Karachi']
 var INITIAL_ZOOM_LEVEL = 2;
 
 //API access key for this project
