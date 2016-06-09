@@ -44,10 +44,11 @@ var lastCityToSearch = false;
 var queryFromClickSearchNotURL = false;
 
 //INITIAL_ZOOM_LEVEL is the zoom level that is set as default when our map is created
-var INITIAL_ZOOM_LEVEL = 5;
+var DEFAULT_ZOOM_LEVEL = 5;
 var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 var INITIAL_CITY_LIST = ['Tokyo','New York','Los Angeles','London']
+var INITIAL_ZOOM_LEVEL = 1;
 
 //API access key for this project
 var API_ACCESS_KEY = 'AIzaSyDJTIlvEzU-B2152hKEyUzBoAJmflJzcjU';
@@ -97,13 +98,7 @@ function handleMapsLoad() {
     lastCityToSearch = false;
     loadParamsFromURL(startURL);
   }else{
-    stuffToGetDone(function(){
-        console.log("Should be Done with GET STUFF DONE ....now draw map")
-        //Don't show result list -- end user will navigate using the map controls
-        //generateResultList();
-        initializeMap(inputObject.inputLat, inputObject.inputLong);
-    });
-    
+    stuffToGetDone();
   }
 
   //include map overlay code
@@ -113,6 +108,35 @@ function handleMapsLoad() {
 
 function stuffToGetDone(){
   console.log("Start stuffToGetDone")
+  geoLiveMapInInitialState = true;
+  lastCityToSearch = false;
+  
+  for (var i = 0; i < INITIAL_CITY_LIST.length; i++) {
+    cleanInputObject();
+    inputObject.inputEmbedsOnly = true;
+    inputObject.inputCreativeCommonsOnly = false;
+    inputObject.hasChannelList = false;
+    inputObject.videoLiscense = 'any';
+    inputObject.videoEmbeddable = 'any';
+    //inputObject.inputQuery = cleanStringOfHTMLEncodedSpaces(urlParams['q']);
+    //inputObject.inputLat = cleanStringOfHTMLEncodedSpaces(urlParams['la']);
+    //inputObject.inputLong = cleanStringOfHTMLEncodedSpaces(urlParams['lo']);
+    inputObject.inputLocationRadius = "1000km";
+    inputObject.inputSearchLocation = INITIAL_CITY_LIST[i];
+    inputObject.inputZoomLevel = INITIAL_ZOOM_LEVEL;
+
+    queryFromClickSearchNotURL = false;
+    searchYouTube();
+    
+    //q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=0
+    
+    if(i == (INITIAL_CITY_LIST - 2)){
+      lastCityToSearch = true;
+    }
+  }
+  
+  
+  /*
     geoLiveMapInInitialState = true;
     lastCityToSearch = false;
     cleanInputObject();
@@ -121,8 +145,9 @@ function stuffToGetDone(){
     cleanInputObject();
     //lastCityToSearch = true;
     url2 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=35.6894875&lo=139.69170639999993&lr=1000km&cl=&sl=tokyo&eo=false&cco=false&zl=0"
-    lastCityToSearch = true;
+    
     loadParamsFromURL(url2);
+    */
     console.log("END stuffToGetDone")
 }
 
@@ -601,12 +626,13 @@ console.log("processYouTubeRequest... finalResults size is "+finalResults.length
           $("div").remove(".tableOfVideoContentResults");
 
           //generate result list and map of videos
+          
           if(geoLiveMapInInitialState && lastCityToSearch){
               generateResultList();
-              initializeMap(inputObject.inputLat, inputObject.inputLong);
+              initializeMap(inputObject.inputLat, inputObject.inputLong, INITIAL_ZOOM_LEVEL);
           }else if(!geoLiveMapInInitialState){
              generateResultList();
-             initializeMap(inputObject.inputLat, inputObject.inputLong);
+             initializeMap(inputObject.inputLat, inputObject.inputLong, DEFAULT_ZOOM_LEVEL);
           }
         }
       });
@@ -760,10 +786,10 @@ function showErrorSection() {
  *  @param inputLat {string} - input latitude
  *  @param inputLong {string} - input longitude
  */
-function initializeMap(inputLat, inputLong) {
+function initializeMap(inputLat, inputLong, zoomLevel) {
   var mapOptions = {
     center: new google.maps.LatLng(inputLat, inputLong),
-    zoom: parseInt(INITIAL_ZOOM_LEVEL)
+    zoom: parseInt(zoomLevel)
   };
   
   //define the map object
