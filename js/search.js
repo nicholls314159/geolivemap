@@ -809,7 +809,8 @@ function initializeMap(inputLat, inputLong, zoomLevel) {
       animation: google.maps.Animation.DROP,
       zIndex: imageNumber,
       icon:{
-        url: 'images/redMarker_' + imageNumber + '.png',
+        //url: 'images/redMarker_' + imageNumber + '.png',
+        url: 'images/redMarker_1.png',
         size: new google.maps.Size(75, 62),
         scaledSize: new google.maps.Size(75, 62)
       }
@@ -866,9 +867,12 @@ function generatePopupBoxHTML(videoResult){
   "</tr>"+
   '<tr>'+
   '<td width=220 align="center">'+
+  /*
   "<a href='" + videoURLString + "'>" +
   "<img src='" + videoResult.thumbNailURL + "' height='180' width='180' align='middle'/>" +
   "</a><br>"+
+  */
+  '<iframe width="300" height="168" src="https://www.youtube.com/embed/'+videoResult.videoID+'" frameborder="0" allowfullscreen></iframe>'
   "</td>"+
   "</tr>"+
   '<tr>'+
