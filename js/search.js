@@ -865,7 +865,7 @@ function generatePopupBoxHTML(videoResult){
   "<img src='" + videoResult.thumbNailURL + "' height='180' width='180' align='middle'/>" +
   "</a><br>"+
   */
-  '<iframe width="200" height="112" src="https://www.youtube.com/embed/'+videoResult.videoID+'" frameborder="0" autoplay="1" allowfullscreen></iframe>'
+  '<iframe width="200" height="112" src="https://www.youtube.com/embed/'+videoResult.videoID+'?autoplay="1"" frameborder="0"  allowfullscreen></iframe>'
   "</td>"+
   "</tr>"+
   '<tr>'+
@@ -927,7 +927,7 @@ function getLocationSearchResults() {
               order: "viewCount",
               type: 'video',
               part: 'snippet',
-              maxResults: '20',
+              maxResults: '40',
               eventType: 'live',
               videoLiscense: inputObject.videoLiscense,
               videoEmbeddable: inputObject.videoEmbeddable,
@@ -950,7 +950,7 @@ function getLocationSearchResults() {
               order: "viewCount",
               type: "video",
               part: "id,snippet",
-              maxResults: "20",
+              maxResults: "40",
               eventType: "live",
               videoLiscense: inputObject.videoLiscense,
               videoEmbeddable: inputObject.videoEmbeddable,
