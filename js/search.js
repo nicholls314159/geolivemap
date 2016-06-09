@@ -96,9 +96,9 @@ function handleMapsLoad() {
     loadParamsFromURL(startURL);
   }else{
     stuffToGetDone(function(){
-      
+        console.log("Should be Done with GET STUFF DONE ....now draw map")
         generateResultList();
-              initializeMap(inputObject.inputLat, inputObject.inputLong);
+        initializeMap(inputObject.inputLat, inputObject.inputLong);
     });
     
   }
@@ -116,9 +116,11 @@ function stuffToGetDone(){
     url1 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=0"
     loadParamsFromURL(url1);
     cleanInputObject();
+    lastCityToSearch = true;
     url2 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=35.6894875&lo=139.69170639999993&lr=1000km&cl=&sl=tokyo&eo=false&cco=false&zl=0"
     //lastCityToSearch = true;
     loadParamsFromURL(url2);
+    console.log("END stuffToGetDone")
 }
 
 
@@ -470,6 +472,7 @@ function updateSearchResultCount(count) {
  *  @param request {object} - this is the request object returned from the YouTube search API
  */
 function processYouTubeRequest(request) {
+  console.log("Start ....  processYouTubeRequest")
   request.execute(function(response) {
     var resultsArr = [];
     var videoIDString = '';
@@ -513,7 +516,7 @@ function processYouTubeRequest(request) {
         //add result to results
         resultsArr.push(videoResult);
       }
-
+console.log("processYouTubeRequest.... resultsArr size is "+resultsArr.length)
       //Now we will use the string of video IDs from the search to do another API call to pull latitude
       //and longitude values for each search result
 
@@ -582,7 +585,7 @@ function processYouTubeRequest(request) {
             finalResults.push(resultsArr[i]);
           }
         }
-
+console.log("processYouTubeRequest... finalResults size is "+finalResults.length)
         if (finalResults.length === 0) {
           //Remove results section as there is nothing to display
           resetResultsSection();
@@ -625,6 +628,7 @@ function processYouTubeRequest(request) {
        }
     });
   });
+  console.log("END.... processRequest")
 }
 
 
