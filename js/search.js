@@ -124,7 +124,7 @@ function stuffToGetDone(){
     inputObject.inputLocationRadius = "1000km";
     inputObject.inputSearchLocation = INITIAL_CITY_LIST[i];
     inputObject.inputZoomLevel = INITIAL_ZOOM_LEVEL;
-
+    inputObject.hasSearchLocation = true;
     queryFromClickSearchNotURL = false;
     searchYouTube();
     
