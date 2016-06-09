@@ -628,6 +628,7 @@ console.log("processYouTubeRequest... finalResults size is "+finalResults.length
           //generate result list and map of videos
           
           if(geoLiveMapInInitialState && lastCityToSearch){
+              console.log("INSIDE geoLiveMapInInitialState && lastCityToSearch call")
               generateResultList();
               initializeMap(inputObject.inputLat, inputObject.inputLong, INITIAL_ZOOM_LEVEL);
           }else if(!geoLiveMapInInitialState){
