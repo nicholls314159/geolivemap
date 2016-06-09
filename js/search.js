@@ -47,6 +47,8 @@ var queryFromClickSearchNotURL = false;
 var INITIAL_ZOOM_LEVEL = 5;
 var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+var INITIAL_CITY_LIST = ['Tokyo','New York','Los Angeles','London']
+
 //API access key for this project
 var API_ACCESS_KEY = 'AIzaSyDJTIlvEzU-B2152hKEyUzBoAJmflJzcjU';
 
@@ -97,7 +99,8 @@ function handleMapsLoad() {
   }else{
     stuffToGetDone(function(){
         console.log("Should be Done with GET STUFF DONE ....now draw map")
-        generateResultList();
+        //Don't show result list -- end user will navigate using the map controls
+        //generateResultList();
         initializeMap(inputObject.inputLat, inputObject.inputLong);
     });
     
@@ -116,7 +119,7 @@ function stuffToGetDone(){
     url1 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=0"
     loadParamsFromURL(url1);
     cleanInputObject();
-    lastCityToSearch = true;
+    //lastCityToSearch = true;
     url2 = "https://8080-dot-2061374-dot-devshell.appspot.com/?q=&la=35.6894875&lo=139.69170639999993&lr=1000km&cl=&sl=tokyo&eo=false&cco=false&zl=0"
     //lastCityToSearch = true;
     loadParamsFromURL(url2);
