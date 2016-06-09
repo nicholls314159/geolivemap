@@ -130,7 +130,8 @@ function stuffToGetDone(){
     
     //q=&la=40.7127837&lo=-74.00594130000002&lr=1000km&cl=&sl=new%20york&eo=false&cco=false&zl=0
     
-    if(i == (INITIAL_CITY_LIST - 2)){
+    if(i == (INITIAL_CITY_LIST.length - 2)){
+      console.log("last city is "+INITIAL_CITY_LIST[i+1]);
       lastCityToSearch = true;
     }
   }
