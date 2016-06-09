@@ -883,7 +883,7 @@ function generatePopupBoxHTML(videoResult){
  *  which is easier to read.
  */ 
 function getDisplayTimeFromTimeStamp(timeStamp){
-    console.log("getDisplayTimeFromTimeStamp with "+timeStamp)
+    //console.log("getDisplayTimeFromTimeStamp with "+timeStamp)
     var displayTime = "";
     var year = timeStamp.substr(0, 4);
     var monthNumeric = timeStamp.substr(5, 2);
